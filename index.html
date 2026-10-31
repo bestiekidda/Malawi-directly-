@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>Malawi Directly | Find Businesses Across Malawi</title>
+<style>
+:root{--bg:#101010;--panel:#1c1c1c;--gold:#f5c400;--muted:#bdbdbd;--line:#554600;--green:#168b48}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif;line-height:1.5}
+header{background:#080808;border-bottom:2px solid var(--gold);padding:18px 4%;position:sticky;top:0;z-index:5}
+.top{max-width:1150px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-weight:900;color:var(--gold);font-size:23px;text-decoration:none}.tag{color:#ccc;font-size:12px}
+nav{display:flex;gap:13px;flex-wrap:wrap}nav a{color:#fff;text-decoration:none;font-size:14px}nav a:hover{color:var(--gold)}
+.hero{text-align:center;padding:55px 15px;background:linear-gradient(130deg,#171717,#302600)}.hero h1{color:var(--gold);font-size:clamp(28px,5vw,45px);margin:0 0 10px}.hero p{max-width:650px;margin:0 auto 22px;color:#ddd}
+.container{width:min(1150px,94%);margin:auto}section{padding:32px 0}.title{text-align:center;color:var(--gold);font-size:26px;margin:0 0 20px}
+button,.btn{border:0;border-radius:7px;padding:12px 15px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+button:disabled{opacity:.6;cursor:wait}.primary{background:var(--gold);color:#111}.secondary{background:#333;color:#fff;border:1px solid #777}.green{background:var(--green);color:white}.danger{background:#b52c2c;color:white}
+input,select,textarea{width:100%;padding:13px;border:1px solid #555;border-radius:7px;background:#222;color:#fff;font:inherit;margin:5px 0 12px}
+label{display:block;color:var(--gold);font-weight:bold;margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:11px}
+.cat{background:#202020;color:#fff;border:1px solid var(--gold);min-height:58px}.cat:hover{background:#5b4900}
+.searchgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card,.box{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px}
+.card h3{color:var(--gold);margin:8px 0}.card p{margin:5px 0;overflow-wrap:anywhere}
+.badge{display:inline-block;background:var(--gold);color:#111;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:bold;margin-bottom:7px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.actions>*{flex:1;min-width:90px;font-size:13px}
+.form{max-width:760px;margin:auto}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.small{font-size:12px;color:var(--muted)}.notice{padding:12px;border-left:3px solid var(--gold);background:#24200f;color:#eee;border-radius:5px;margin:12px 0}
+.adminrow{border:1px solid #555;border-radius:7px;padding:12px;margin:10px 0;background:#222}
+.adminrow button{margin:4px}.status{padding:10px;border-radius:6px;background:#242424;color:#eee;margin:10px 0}
+footer{background:#080808;border-top:2px solid var(--gold);padding:25px;text-align:center;color:#ccc;margin-top:30px}
+.hidden{display:none!important}.empty{text-align:center;color:#bbb;padding:25px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.stat{background:#252525;padding:15px;border-radius:8px;text-align:center}.stat strong{display:block;color:var(--gold);font-size:24px}
+@media(max-width:650px){.searchgrid,.two{grid-template-columns:1fr}.top{justify-content:center}nav{justify-content:center}.hero{padding:40px 12px}}
+</style>
+</head>
+<body>
+<header><div class="top">
+ <div><a class="brand" href="#home">🇲🇼 MALAWI DIRECTLY</a><div class="tag">Find Businesses. Discover Opportunities. Grow Malawi.</div></div>
+ <nav><a href="#home">Home</a><a href="#categories">Categories</a><a href="#businesses">Find Businesses</a><a href="#register">Register</a><a href="#advertise">Advertise</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#admin">Admin</a></nav>
+</div></header>
+<div class="hero" id="home"><h1>Find Businesses Across Malawi</h1><p>Discover local shops, services, professionals and companies. Connect directly with the people behind the business.</p><a class="btn primary" href="#businesses">Find a Business</a> <a class="btn secondary" href="#register">List Your Business</a></div>
+<main class="container">
+<section id="categories"><h2 class="title">Explore Business Categories</h2><div class="grid" id="categoryList"></div></section>
+<section id="businesses"><h2 class="title">Find a Business</h2>
+ <div class="searchgrid"><input id="searchInput" placeholder="Business, product or service..."><select id="districtFilter"><option value="">All districts</option><option value="Balaka">Balaka</option><option value="Blantyre">Blantyre</option><option value="Chikwawa">Chikwawa</option><option value="Chiradzulu">Chiradzulu</option><option value="Chitipa">Chitipa</option><option value="Dedza">Dedza</option><option value="Dowa">Dowa</option><option value="Karonga">Karonga</option><option value="Kasungu">Kasungu</option><option value="Likoma">Likoma</option><option value="Lilongwe">Lilongwe</option><option value="Machinga">Machinga</option><option value="Mangochi">Mangochi</option><option value="Mchinji">Mchinji</option><option value="Mulanje">Mulanje</option><option value="Mwanza">Mwanza</option><option value="Mzimba">Mzimba</option><option value="Neno">Neno</option><option value="Nkhatabay">Nkhatabay</option><option value="Nkhotakota">Nkhotakota</option><option value="Nsanje">Nsanje</option><option value="Ntcheu">Ntcheu</option><option value="Ntchisi">Ntchisi</option><option value="Phalombe">Phalombe</option><option value="Rumphi">Rumphi</option><option value="Salima">Salima</option><option value="Thyolo">Thyolo</option><option value="Zomba">Zomba</option></select><select id="categoryFilter"><option value="">All categories</option><option value="Restaurants">Restaurants</option><option value="Hotels & Lodges">Hotels & Lodges</option><option value="Clothing & Fashion">Clothing & Fashion</option><option value="Beauty Salons">Beauty Salons</option><option value="Barbershops">Barbershops</option><option value="Electronics">Electronics</option><option value="Phone & Computer Repair">Phone & Computer Repair</option><option value="Construction">Construction</option><option value="Hardware & Building Materials">Hardware & Building Materials</option><option value="Transport">Transport</option><option value="Car Hire">Car Hire</option><option value="Pharmacies">Pharmacies</option><option value="Hospitals & Clinics">Hospitals & Clinics</option><option value="Schools & Colleges">Schools & Colleges</option><option value="Agriculture">Agriculture</option><option value="Farms & Agro-dealers">Farms & Agro-dealers</option><option value="Real Estate">Real Estate</option><option value="Shops & Supermarkets">Shops & Supermarkets</option><option value="Photography & Video">Photography & Video</option><option value="Printing & Branding">Printing & Branding</option><option value="Cleaning Services">Cleaning Services</option><option value="Delivery Services">Delivery Services</option><option value="Events & Entertainment">Events & Entertainment</option><option value="Financial Services">Financial Services</option><option value="Legal Services">Legal Services</option><option value="Fitness & Sports">Fitness & Sports</option><option value="Tourism">Tourism</option><option value="Mechanics & Garages">Mechanics & Garages</option><option value="Plumbing & Electrical">Plumbing & Electrical</option><option value="General Services">General Services</option></select></div>
+ <div class="actions"><button class="secondary" id="clearFilters">Clear filters</button><select id="sortFilter" aria-label="Sort businesses"><option value="featured">Featured first</option><option value="newest">Newest first</option><option value="name">Name A–Z</option></select></div>
+ <div id="businessList" class="cards"><div class="empty">Loading businesses...</div></div>
+</section>
+<section id="register"><h2 class="title">Register Your Business</h2><div class="box form">
+ <div class="notice">Business submissions are sent to the directory for administrator approval. Your listing will appear publicly after it is approved.</div>
+ <form id="businessForm">
+ <label>Business name *</label><input id="businessName" required maxlength="80" placeholder="e.g. Flora Beauty Salon">
+ <div class="two"><div><label>Category *</label><select id="businessCategory" required><option value="">Choose category</option><option value="Restaurants">Restaurants</option><option value="Hotels & Lodges">Hotels & Lodges</option><option value="Clothing & Fashion">Clothing & Fashion</option><option value="Beauty Salons">Beauty Salons</option><option value="Barbershops">Barbershops</option><option value="Electronics">Electronics</option><option value="Phone & Computer Repair">Phone & Computer Repair</option><option value="Construction">Construction</option><option value="Hardware & Building Materials">Hardware & Building Materials</option><option value="Transport">Transport</option><option value="Car Hire">Car Hire</option><option value="Pharmacies">Pharmacies</option><option value="Hospitals & Clinics">Hospitals & Clinics</option><option value="Schools & Colleges">Schools & Colleges</option><option value="Agriculture">Agriculture</option><option value="Farms & Agro-dealers">Farms & Agro-dealers</option><option value="Real Estate">Real Estate</option><option value="Shops & Supermarkets">Shops & Supermarkets</option><option value="Photography & Video">Photography & Video</option><option value="Printing & Branding">Printing & Branding</option><option value="Cleaning Services">Cleaning Services</option><option value="Delivery Services">Delivery Services</option><option value="Events & Entertainment">Events & Entertainment</option><option value="Financial Services">Financial Services</option><option value="Legal Services">Legal Services</option><option value="Fitness & Sports">Fitness & Sports</option><option value="Tourism">Tourism</option><option value="Mechanics & Garages">Mechanics & Garages</option><option value="Plumbing & Electrical">Plumbing & Electrical</option><option value="General Services">General Services</option></select></div><div><label>District *</label><select id="businessDistrict" required><option value="">Choose district</option><option value="Balaka">Balaka</option><option value="Blantyre">Blantyre</option><option value="Chikwawa">Chikwawa</option><option value="Chiradzulu">Chiradzulu</option><option value="Chitipa">Chitipa</option><option value="Dedza">Dedza</option><option value="Dowa">Dowa</option><option value="Karonga">Karonga</option><option value="Kasungu">Kasungu</option><option value="Likoma">Likoma</option><option value="Lilongwe">Lilongwe</option><option value="Machinga">Machinga</option><option value="Mangochi">Mangochi</option><option value="Mchinji">Mchinji</option><option value="Mulanje">Mulanje</option><option value="Mwanza">Mwanza</option><option value="Mzimba">Mzimba</option><option value="Neno">Neno</option><option value="Nkhatabay">Nkhatabay</option><option value="Nkhotakota">Nkhotakota</option><option value="Nsanje">Nsanje</option><option value="Ntcheu">Ntcheu</option><option value="Ntchisi">Ntchisi</option><option value="Phalombe">Phalombe</option><option value="Rumphi">Rumphi</option><option value="Salima">Salima</option><option value="Thyolo">Thyolo</option><option value="Zomba">Zomba</option></select></div></div>
+ <label>Town / area *</label><input id="businessLocation" required maxlength="100" placeholder="e.g. Limbe, Blantyre">
+ <div class="two"><div><label>Phone number *</label><input id="businessPhone" type="tel" required maxlength="20" placeholder="0991234567"></div><div><label>Email (optional)</label><input id="businessEmail" type="email" maxlength="120" placeholder="business@example.com"></div></div>
+ <label>WhatsApp number (if different)</label><input id="businessWhatsapp" type="tel" maxlength="20" placeholder="0991234567">
+ <label>Business description *</label><textarea id="businessDescription" rows="4" required maxlength="600" placeholder="Describe products and services..."></textarea>
+ <div class="two"><div><label>Opening time</label><input id="openingTime" maxlength="20" placeholder="e.g. 08:00"></div><div><label>Closing time</label><input id="closingTime" maxlength="20" placeholder="e.g. 17:00"></div></div>
+ <label>Website or social media link</label><input id="businessWebsite" type="url" maxlength="300" placeholder="https://...">
+ <label>Google Maps link (optional)</label><input id="businessMap" type="url" maxlength="500" placeholder="https://maps.google.com/...">
+ <button class="primary" id="submitBusiness" type="submit" style="width:100%">SUBMIT BUSINESS</button>
+ </form>
+ <p class="small">Photo uploads will be added after Firebase Storage is configured. For now, listings include business details and contact links.</p>
+</div></section>
+<section id="advertise"><h2 class="title">Advertise With Us</h2><div class="box form">
+ <p>Choose an advertising package and a mobile money payment method. Confirm the amount with the administrator before sending money.</p>
+ <label>Business name</label><input id="advertiseName" placeholder="Your business name">
+ <label>Your phone number</label><input id="advertisePhone" type="tel" placeholder="0991234567">
+ <label>Advertising package</label><select id="advertisePackage"><option>Featured – 7 Days – MWK 3,000</option><option>Featured – 30 Days – MWK 10,000</option><option>Premium – 30 Days – MWK 20,000</option><option>Banner Advertising – 30 Days – MWK 25,000</option></select>
+ <label>Payment method</label><select id="advertisePaymentMethod"><option value="Airtel Money">Airtel Money</option><option value="TNM Mpamba">TNM Mpamba</option></select>
+ <div class="notice" id="paymentDetails"><strong>Airtel Money</strong><br>Send payment to: <strong>0987110905</strong><br>Account name: Malawi Directly administrator<br><span class="small">Check the recipient name before confirming payment.</span></div>
+ <button class="primary" id="advertiseButton" style="width:100%">CONTINUE ON WHATSAPP</button>
+ <p class="small">These are the Malawi Directly advertising prices. This website does not automatically verify payments. The administrator must confirm payment before activating an advertisement. Never send money until you have confirmed the package price and recipient name.</p>
+</div></section>
+<section id="about"><h2 class="title">About Malawi Directly</h2><div class="box"><p>Malawi Directly is a business directory designed to help people discover businesses and help local businesses reach more customers.</p><p class="small">Business information should be checked before customers make purchases or payments.</p></div></section>
+<section id="contact"><h2 class="title">Contact Malawi Directly</h2><div class="box form"><p>For listing support, advertising and corrections, contact the directory administrator.</p><label>Directory WhatsApp number</label><p id="directoryPhoneDisplay">Add your WhatsApp number in the code settings.</p><p class="small">To change the number, update DIRECTORY_WHATSAPP near the top of the JavaScript section.</p></div></section>
+
+<section id="privacy">
+  <h2 class="title">Privacy Policy</h2>
+  <div class="box">
+    <p><strong>Last updated: 31 October 2026</strong></p>
+    <p>Malawi Directly is a business directory that helps people discover businesses and contact them. This policy explains what information may be collected when you use the website.</p>
+
+    <h3>1. Information we may collect</h3>
+    <p>When a business submits a listing, we may collect its business name, category, district, location, phone number, WhatsApp number, email address, description, opening hours, website or map details, and other information entered in the form. Advertising enquiries may include a contact name or business name, phone number, selected package, payment method and transaction reference.</p>
+
+    <h3>2. How information is used</h3>
+    <p>We use submitted information to review and publish business listings, operate the directory, respond to enquiries, manage advertising requests, verify payments manually, administer promotions and prevent misuse of the service.</p>
+
+    <h3>3. Public information</h3>
+    <p>Once a listing is approved, information included in that listing may be visible to anyone visiting the directory. Do not submit private information that you do not want displayed publicly. Do not submit another person's personal details unless you have permission.</p>
+
+    <h3>4. Storage and service providers</h3>
+    <p>Website listing information is stored using Google Firebase services. Information may be processed or stored on systems outside Malawi, depending on the service configuration. We do not ask users to enter mobile money PINs, passwords or one-time security codes into this website.</p>
+
+    <h3>5. Sharing</h3>
+    <p>We do not intend to sell submitted personal information. Information may be shared where needed to operate the website and its connected services, respond to a lawful request, protect users or investigate suspected fraud. Business contact details in approved listings are shared publicly as part of the directory.</p>
+
+    <h3>6. Accuracy, access and removal requests</h3>
+    <p>Business owners are responsible for ensuring their submitted information is accurate and that they are authorised to publish it. To request a correction or removal, contact the Malawi Directly administrator using the contact details shown on this website. We may ask for reasonable information to confirm that you are authorised to make the request.</p>
+
+    <h3>7. Security and retention</h3>
+    <p>We use access controls and administrative procedures intended to protect information, but no online service can guarantee absolute security. We keep information for as long as reasonably needed to operate the directory, manage listings and advertising, resolve disputes, and meet applicable obligations.</p>
+
+    <h3>8. Children and changes</h3>
+    <p>This directory is intended for general business and public use, not for collecting children's personal information. We may update this policy when the service changes. The latest version will be displayed on this page.</p>
+
+    <p class="small">Questions or privacy requests: use the Contact section of Malawi Directly.</p>
+  </div>
+</section>
+
+<section id="terms">
+  <h2 class="title">Terms of Use & Advertising Terms</h2>
+  <div class="box">
+    <p><strong>Last updated: 31 October 2026</strong></p>
+    <p>By using Malawi Directly, you agree to these terms. If you do not agree, please do not use the website.</p>
+
+    <h3>1. What the directory does</h3>
+    <p>Malawi Directly provides a platform for discovering businesses and contacting them. A listing is not a guarantee, endorsement or certification of a business, its products, services, quality, licensing or conduct. Users should make their own checks before paying a business or entering an agreement.</p>
+
+    <h3>2. Business listing rules</h3>
+    <p>People submitting listings must provide accurate information and must have authority to submit it. Do not submit false, misleading, unlawful, abusive, infringing or fraudulent content. Do not list another person's contact details without permission. Listings may be reviewed, rejected, edited, unpublished or removed where necessary.</p>
+
+    <h3>3. Advertising packages and prices</h3>
+    <p>The current advertised package prices are:</p>
+    <ul>
+      <li>Featured – 7 days: MWK 3,000</li>
+      <li>Featured – 30 days: MWK 10,000</li>
+      <li>Premium – 30 days: MWK 20,000</li>
+      <li>Banner Advertising – 30 days: MWK 25,000</li>
+    </ul>
+    <p>Package availability and placement may depend on the website's layout and operational capacity. The advertising period starts when the administrator activates the promotion after confirming receipt of the full payment.</p>
+
+    <h3>4. Payment and manual verification</h3>
+    <p>Payments are handled manually through the Airtel Money or TNM Mpamba details displayed by the website or confirmed by the administrator. Before sending money, the advertiser must confirm the correct recipient name, number, package and amount. Never share a mobile money PIN, password or one-time security code. A payment screenshot or transaction reference alone is not proof that funds have been received. Promotions are activated only after the administrator checks that the payment has arrived.</p>
+
+    <h3>5. Expiry, renewal and refunds</h3>
+    <p>Featured, Premium and Banner promotions end automatically when their paid period expires. The business listing may remain visible as a normal approved listing, but its paid promotional placement ends. Advertisers who want continued promotion must arrange and pay for a new period. If a payment is not received or cannot be verified, the promotion will not be activated. Refund requests or billing disputes should be raised with the administrator and will be reviewed case by case, subject to applicable law.</p>
+
+    <h3>6. Advertiser responsibility</h3>
+    <p>Advertisers are responsible for the truthfulness and legality of their claims, products, services, images and offers, and for having any permissions or licences required to advertise them. Payment for promotion does not guarantee sales, customer enquiries or a particular business outcome.</p>
+
+    <h3>7. User conduct and reports</h3>
+    <p>Users must not misuse the website, interfere with its operation, attempt unauthorised access, upload harmful material or use listings for harassment, fraud or unlawful activity. Please contact the administrator if you find a listing that appears inaccurate, misleading or inappropriate.</p>
+
+    <h3>8. Availability and liability</h3>
+    <p>We aim to keep the website available and information useful, but we do not guarantee uninterrupted access, error-free operation or the accuracy of every third-party listing. To the extent permitted by applicable law, Malawi Directly is not responsible for disputes or losses arising from dealings between users and listed businesses. Nothing in these terms excludes liability that cannot lawfully be excluded.</p>
+
+    <h3>9. Changes and contact</h3>
+    <p>These terms may be updated as the service develops. Continued use after an update means you accept the revised terms. For questions, corrections, complaints or advertising disputes, contact the Malawi Directly administrator through the Contact section of this website.</p>
+
+    <p class="small">These pages are starter website policies, not legal advice. Before a public commercial launch, have them reviewed for compliance with applicable Malawi laws and your actual business practices.</p>
+  </div>
+</section>
+
+<section id="admin"><h2 class="title">Admin Dashboard</h2><div class="box form">
+ <div class="notice">Sign in using the administrator email and password you created in Firebase Authentication. Never share your password.</div>
+ <div id="connectionStatus" class="status">Connecting to Firebase...</div>
+ <div id="adminLoginBox"><label>Administrator email</label><input id="adminEmail" type="email" autocomplete="username" placeholder="Your admin email"><label>Password</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Your admin password"><button class="primary" id="adminLoginButton">LOGIN</button></div>
+ <div id="adminPanel" class="hidden"><div class="stats" id="adminStats"></div><h3 style="color:var(--gold)">Manage business submissions</h3><div id="adminBusinessList"></div><button class="secondary" id="adminLogoutButton">LOG OUT</button></div>
+</div></section>
+</main>
+<footer><strong style="color:var(--gold)">MALAWI DIRECTLY</strong><br>Find Businesses. Discover Opportunities. Grow Malawi.<br><a href="#privacy" style="color:var(--gold)">Privacy Policy</a> &nbsp; | &nbsp; <a href="#terms" style="color:var(--gold)">Terms of Use & Advertising</a></footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+// DIRECTORY SETTINGS: replace with your own Malawi WhatsApp number (265 + 9 digits).
+const DIRECTORY_WHATSAPP = "265991234567";
+const AIRTEL_MONEY_NUMBER = "0987110905";
+const TNM_MPAMBA_NUMBER = "0889926232";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCVSwd9X6vI3bLTWeNlU9JJsAZEMBkY1-Y",
+  authDomain: "malawi-directly.firebaseapp.com",
+  projectId: "malawi-directly",
+  storageBucket: "malawi-directly.firebasestorage.app",
+  messagingSenderId: "540021220890",
+  appId: "1:540021220890:web:6449e96896db817c7593a3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+const categories = ["Restaurants","Hotels & Lodges","Clothing & Fashion","Beauty Salons","Barbershops","Electronics","Phone & Computer Repair","Construction","Hardware & Building Materials","Transport","Car Hire","Pharmacies","Hospitals & Clinics","Schools & Colleges","Agriculture","Farms & Agro-dealers","Real Estate","Shops & Supermarkets","Photography & Video","Printing & Branding","Cleaning Services","Delivery Services","Events & Entertainment","Financial Services","Legal Services","Fitness & Sports","Tourism","Mechanics & Garages","Plumbing & Electrical","General Services"];
+const districts = ["Balaka","Blantyre","Chikwawa","Chiradzulu","Chitipa","Dedza","Dowa","Karonga","Kasungu","Likoma","Lilongwe","Machinga","Mangochi","Mchinji","Mulanje","Mwanza","Mzimba","Neno","Nkhatabay","Nkhotakota","Nsanje","Ntcheu","Ntchisi","Phalombe","Rumphi","Salima","Thyolo","Zomba"];
+let businesses = [];
+let isAdmin = false;
+let adminUser = null;
+
+function fillSelect(id, values) {
+  const select = $(id);
+  values.forEach(value => {
+    if ([...select.options].some(option => option.value === value)) return;
+    const option = document.createElement("option");
+    option.value = value; option.textContent = value; select.appendChild(option);
+  });
+}
+fillSelect("businessCategory", categories);
+fillSelect("categoryFilter", categories);
+fillSelect("businessDistrict", districts);
+fillSelect("districtFilter", districts);
+
+categories.forEach(category => {
+  const button = document.createElement("button");
+  button.className = "cat"; button.textContent = category;
+  button.addEventListener("click", () => {
+    $("categoryFilter").value = category;
+    renderBusinesses();
+    $("businesses").scrollIntoView({behavior:"smooth"});
+  });
+  $("categoryList").appendChild(button);
+});
+$("directoryPhoneDisplay").textContent = DIRECTORY_WHATSAPP === "265991234567" ? "WhatsApp number not set yet." : "+" + DIRECTORY_WHATSAPP;
+
+function normalisePhone(value) {
+  let p = String(value || "").replace(/\D/g, "");
+  if (p.startsWith("0") && p.length === 10) p = "265" + p.slice(1);
+  else if (p.length === 9) p = "265" + p;
+  return /^265\d{9}$/.test(p) ? p : null;
+}
+function safeUrl(value) {
+  if (!value) return "";
+  try { const u = new URL(value); return ["http:","https:"].includes(u.protocol) ? u.href : ""; }
+  catch { return ""; }
+}
+function makeText(tag, text, className) {
+  const el = document.createElement(tag);
+  el.textContent = text || "";
+  if (className) el.className = className;
+  return el;
+}
+function isPromotionActive(b) {
+  return !!b.promoType && Number(b.promoExpiresAt || 0) > Date.now();
+}
+function promotionLabel(b) {
+  if (!isPromotionActive(b)) return "";
+  if (b.promoType === "Premium") return "★ PREMIUM AD";
+  if (b.promoType === "Banner Advertising") return "★ BANNER AD";
+  return "★ FEATURED";
+}
+
+function formatCreated(value) {
+  if (typeof value === "number") return value;
+  if (value && typeof value.toMillis === "function") return value.toMillis();
+  return 0;
+}
+
+async function loadPublicBusinesses() {
+  try {
+    const q = query(collection(db, "businesses"), where("approved", "==", true));
+    const snap = await getDocs(q);
+    businesses = snap.docs.map(d => ({...d.data(), id:d.id}));
+    renderBusinesses();
+    $("connectionStatus").textContent = "Connected to Firebase. Public business listings are loading online.";
+  } catch (error) {
+    console.error(error);
+    $("businessList").innerHTML = '<div class="empty">Could not load listings. Check your internet connection and Firestore rules.</div>';
+    $("connectionStatus").textContent = "Firebase connection issue: " + error.message;
+  }
+}
+
+$("businessForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const phone = normalisePhone($("businessPhone").value);
+  const whatsapp = normalisePhone($("businessWhatsapp").value) || phone;
+  if (!phone) { alert("Enter a valid Malawi phone number, for example 0991234567."); return; }
+  const website = safeUrl($("businessWebsite").value.trim());
+  const map = safeUrl($("businessMap").value.trim());
+  if ($("businessWebsite").value.trim() && !website) { alert("Enter a valid website link beginning with https://"); return; }
+  if ($("businessMap").value.trim() && !map) { alert("Enter a valid Google Maps link beginning with https://"); return; }
+
+  const button = $("submitBusiness");
+  button.disabled = true; button.textContent = "SUBMITTING...";
+  try {
+    const listing = {
+      name: $("businessName").value.trim(),
+      category: $("businessCategory").value,
+      district: $("businessDistrict").value,
+      location: $("businessLocation").value.trim(),
+      phone,
+      whatsapp,
+      email: $("businessEmail").value.trim(),
+      description: $("businessDescription").value.trim(),
+      opening: $("openingTime").value.trim(),
+      closing: $("closingTime").value.trim(),
+      website,
+      map,
+      approved: false,
+      featured: false,
+      created: Date.now()
+    };
+    await addDoc(collection(db, "businesses"), listing);
+    event.target.reset();
+    alert("Thank you! Your business has been submitted and is waiting for administrator approval.");
+    $("businesses").scrollIntoView({behavior:"smooth"});
+  } catch (error) {
+    console.error(error);
+    alert("The submission could not be saved. Please check your internet connection or contact the administrator. Details: " + error.message);
+  } finally {
+    button.disabled = false; button.textContent = "SUBMIT BUSINESS";
+  }
+});
+
+function renderBusinesses() {
+  const search = $("searchInput").value.trim().toLowerCase();
+  const district = $("districtFilter").value;
+  const category = $("categoryFilter").value;
+  const sort = $("sortFilter").value;
+  let rows = businesses.filter(b =>
+    b.approved === true &&
+    (!district || b.district === district) &&
+    (!category || b.category === category) &&
+    [b.name,b.description,b.location,b.district,b.category].join(" ").toLowerCase().includes(search)
+  );
+  rows.sort((a,b) => sort === "newest" ? formatCreated(b.created)-formatCreated(a.created) :
+    sort === "name" ? String(a.name).localeCompare(String(b.name)) :
+    Number(isPromotionActive(b))-Number(isPromotionActive(a)) || formatCreated(b.created)-formatCreated(a.created));
+  const root = $("businessList"); root.innerHTML = "";
+  if (!rows.length) { root.appendChild(makeText("div","No approved businesses found yet. Try another search or submit a business for approval.","empty")); return; }
+  rows.forEach(b => {
+    const card = document.createElement("article"); card.className = "card";
+    if (isPromotionActive(b)) {
+      const promoBadge = makeText("span", promotionLabel(b), "badge");
+      card.appendChild(promoBadge);
+      if (b.promoType === "Banner Advertising") card.style.border = "2px solid var(--gold)";
+    }
+    card.appendChild(makeText("h3",b.name));
+    const details = [
+      ["Category",b.category],["District",b.district],["Location",b.location],
+      ["Phone","+" + (b.phone || "")],["Hours",[b.opening,b.closing].filter(Boolean).join(" – ") || "Not provided"],
+      ["About",b.description]
+    ];
+    details.forEach(([key,value]) => card.appendChild(makeText("p",key + ": " + (value || "Not provided"))));
+    const actions = document.createElement("div"); actions.className = "actions";
+    const wa = document.createElement("a"); wa.className="btn green"; wa.textContent="WhatsApp";
+    wa.href="https://wa.me/"+(b.whatsapp || b.phone)+"?text="+encodeURIComponent("Hello, I found your business on Malawi Directly.");
+    wa.target="_blank"; wa.rel="noopener"; actions.appendChild(wa);
+    const call = document.createElement("a"); call.className="btn primary"; call.textContent="Call"; call.href="tel:+"+b.phone; actions.appendChild(call);
+    if (b.map) { const map=document.createElement("a"); map.className="btn secondary"; map.textContent="Directions"; map.href=b.map; map.target="_blank"; map.rel="noopener"; actions.appendChild(map); }
+    if (b.website) { const site=document.createElement("a"); site.className="btn secondary"; site.textContent="Website"; site.href=b.website; site.target="_blank"; site.rel="noopener"; actions.appendChild(site); }
+    card.appendChild(actions);
+    root.appendChild(card);
+  });
+}
+["searchInput","districtFilter","categoryFilter","sortFilter"].forEach(id => $(id).addEventListener(id==="searchInput"?"input":"change",renderBusinesses));
+$("clearFilters").addEventListener("click", () => {
+  $("searchInput").value=""; $("districtFilter").value=""; $("categoryFilter").value=""; renderBusinesses();
+});
+
+function updatePaymentDetails() {
+  const method = $("advertisePaymentMethod").value;
+  const number = method === "Airtel Money" ? AIRTEL_MONEY_NUMBER : TNM_MPAMBA_NUMBER;
+  $("paymentDetails").innerHTML = `<strong>${method}</strong><br>Send payment to: <strong>${number}</strong><br>Account name: Malawi Directly administrator<br><span class="small">Check the recipient name before confirming payment.</span>`;
+}
+$("advertisePaymentMethod").addEventListener("change", updatePaymentDetails);
+updatePaymentDetails();
+
+$("advertiseButton").addEventListener("click", () => {
+  const name=$("advertiseName").value.trim(), phone=normalisePhone($("advertisePhone").value), pkg=$("advertisePackage").value;
+  const method=$("advertisePaymentMethod").value;
+  const paymentNumber = method === "Airtel Money" ? AIRTEL_MONEY_NUMBER : TNM_MPAMBA_NUMBER;
+  if (!name || !phone) { alert("Enter your business name and a valid Malawi phone number."); return; }
+  if (!/^265\d{9}$/.test(DIRECTORY_WHATSAPP)) { alert("The directory WhatsApp number has not been set in the code yet."); return; }
+  const message=`Hello, I want to advertise on Malawi Directly.\nBusiness: ${name}\nPhone: +${phone}\nPackage: ${pkg}\nPayment method: ${method}\nPayment number shown: ${paymentNumber}\nPlease confirm the package price and payment recipient. I will send payment only after confirmation and share my transaction reference for verification.`;
+  window.open("https://wa.me/"+DIRECTORY_WHATSAPP+"?text="+encodeURIComponent(message),"_blank","noopener");
+});
+
+$("adminLoginButton").addEventListener("click", async () => {
+  const email=$("adminEmail").value.trim(), password=$("adminPassword").value;
+  if (!email || !password) { alert("Enter your administrator email and password."); return; }
+  const button=$("adminLoginButton"); button.disabled=true; button.textContent="SIGNING IN...";
+  try {
+    await signInWithEmailAndPassword(auth,email,password);
+  } catch(error) {
+    alert("Login failed: " + error.message);
+  } finally {
+    button.disabled=false; button.textContent="LOGIN";
+  }
+});
+$("adminLogoutButton").addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, async user => {
+  adminUser=user;
+  if (user) {
+    isAdmin=true;
+    $("adminLoginBox").classList.add("hidden");
+    $("adminPanel").classList.remove("hidden");
+    $("connectionStatus").textContent="Administrator signed in. Loading all submissions...";
+    await loadAdminBusinesses();
+  } else {
+    isAdmin=false;
+    $("adminLoginBox").classList.remove("hidden");
+    $("adminPanel").classList.add("hidden");
+    await loadPublicBusinesses();
+  }
+});
+
+async function loadAdminBusinesses() {
+  try {
+    const snap=await getDocs(collection(db,"businesses"));
+    businesses=snap.docs.map(d=>({...d.data(),id:d.id}));
+    renderBusinesses(); renderAdmin();
+    $("connectionStatus").textContent="Administrator connected. You can review pending submissions.";
+  } catch(error) {
+    console.error(error);
+    $("connectionStatus").textContent="Could not load admin listings: "+error.message;
+  }
+}
+function renderAdmin() {
+  if (!isAdmin) return;
+  const pending=businesses.filter(b=>b.approved!==true).length;
+  const activePromos=businesses.filter(b=>b.approved===true && isPromotionActive(b)).length;
+  const visible=businesses.filter(b=>b.approved===true).length;
+  $("adminStats").innerHTML="";
+  [["All submissions",businesses.length],["Pending approval",pending],["Published",visible],["Active paid adverts",activePromos]].forEach(([label,value])=>{
+    const box=document.createElement("div"); box.className="stat"; box.appendChild(makeText("strong",String(value))); box.appendChild(makeText("span",label)); $("adminStats").appendChild(box);
+  });
+  const root=$("adminBusinessList"); root.innerHTML="";
+  if (!businesses.length) { root.appendChild(makeText("p","No business submissions yet.","empty")); return; }
+  businesses.sort((a,b)=>Number(a.approved===true)-Number(b.approved===true) || formatCreated(b.created)-formatCreated(a.created));
+  businesses.forEach(b=>{
+    const row=document.createElement("div"); row.className="adminrow";
+    row.appendChild(makeText("strong",b.name || "Unnamed business"));
+    row.appendChild(makeText("p",(b.category||"") + " | " + (b.district||"") + " | " + (b.location||"")));
+    row.appendChild(makeText("p","Phone: +"+(b.phone||"")+" | Status: "+(b.approved===true?"Published":"Pending approval")));
+    if (isPromotionActive(b)) {
+      row.appendChild(makeText("p","Paid promotion: "+b.promoType+" | Expires: "+new Date(Number(b.promoExpiresAt)).toLocaleString()));
+    } else if (b.promoType) {
+      row.appendChild(makeText("p","Promotion expired: "+b.promoType));
+    }
+    const approve=document.createElement("button"); approve.className="primary"; approve.textContent=b.approved===true?"Unpublish":"Approve"; approve.addEventListener("click",()=>changeListing(b.id,{approved:b.approved!==true})); row.appendChild(approve);
+
+    if (b.approved===true) {
+      const packageSelect=document.createElement("select");
+      packageSelect.style.maxWidth="100%";
+      packageSelect.innerHTML='<option value="Featured 7 Days">Featured – 7 Days – MWK 3,000</option><option value="Featured 30 Days">Featured – 30 Days – MWK 10,000</option><option value="Premium">Premium – 30 Days – MWK 20,000</option><option value="Banner Advertising">Banner Advertising – 30 Days – MWK 25,000</option>';
+      const paymentRef=document.createElement("input");
+      paymentRef.placeholder="Payment transaction ID / reference (required)";
+      paymentRef.setAttribute("aria-label","Payment transaction reference");
+      const activate=document.createElement("button"); activate.className="green"; activate.textContent="Activate after payment verified";
+      activate.addEventListener("click",async()=>{
+        const ref=paymentRef.value.trim();
+        if (!ref) { alert("Enter the mobile money transaction reference after checking the payment."); return; }
+        if (!confirm("Have you personally confirmed that the full payment has arrived in your Airtel Money or TNM Mpamba account? Only continue if the money is received.")) return;
+        const choice=packageSelect.value;
+        const days=choice==="Featured 7 Days"?7:30;
+        const promoType=choice==="Featured 7 Days"||choice==="Featured 30 Days"?"Featured":choice;
+        const amount=choice==="Featured 7 Days"?3000:choice==="Featured 30 Days"?10000:choice==="Premium"?20000:25000;
+        const expires=Date.now()+days*24*60*60*1000;
+        await changeListing(b.id,{
+          featured:true,
+          promoType,
+          promoExpiresAt:expires,
+          promoPaymentReference:ref,
+          promoPaymentVerified:true,
+          promoAmountMWK:amount,
+          promoActivatedAt:Date.now()
+        });
+      });
+      row.appendChild(makeText("p","Paid advertising package (activate only after you verify the money arrived):"));
+      row.appendChild(packageSelect); row.appendChild(paymentRef); row.appendChild(activate);
+      if (isPromotionActive(b)) {
+        const stop=document.createElement("button"); stop.className="danger"; stop.textContent="End promotion now";
+        stop.addEventListener("click",()=>changeListing(b.id,{featured:false,promoExpiresAt:Date.now(),promoEndedEarly:true}));
+        row.appendChild(stop);
+      }
+    }
+    const del=document.createElement("button"); del.className="danger"; del.textContent="Delete";
+    del.addEventListener("click",async()=>{if(confirm("Permanently delete "+(b.name||"this listing")+"?")){try{await deleteDoc(doc(db,"businesses",b.id));await loadAdminBusinesses();}catch(e){alert("Delete failed: "+e.message);}}});
+    row.appendChild(del); root.appendChild(row);
+  });
+}
+async function changeListing(id,changes) {
+  try { await updateDoc(doc(db,"businesses",id),changes); await loadAdminBusinesses(); }
+  catch(error) { alert("Could not update listing: "+error.message); }
+}
+
+loadPublicBusinesses();
+</script>
+</body>
+</html>
