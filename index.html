@@ -367,7 +367,7 @@ $("advertiseButton").addEventListener("click", () => {
   const method=$("advertisePaymentMethod").value;
   const paymentNumber = method === "Airtel Money" ? AIRTEL_MONEY_NUMBER : TNM_MPAMBA_NUMBER;
   if (!name || !phone) { alert("Enter your business name and a valid Malawi phone number."); return; }
-  if (!/^265\d{9}$/.test(DIRECTORY_WHATSAPP)) { alert("The directory WhatsApp number has not been set in the code yet."); return; }
+  if (!/^265\d{9}$/.test(const DIRECTORY_WHATSAPP = "265889926232";)) { alert("The directory WhatsApp number has not been set in the code yet."); return; }
   const message=`Hello, I want to advertise on Malawi Directly.\nBusiness: ${name}\nPhone: +${phone}\nPackage: ${pkg}\nPayment method: ${method}\nPayment number shown: ${paymentNumber}\nPlease confirm the package price and payment recipient. I will send payment only after confirmation and share my transaction reference for verification.`;
   window.open("https://wa.me/"+DIRECTORY_WHATSAPP+"?text="+encodeURIComponent(message),"_blank","noopener");
 });
